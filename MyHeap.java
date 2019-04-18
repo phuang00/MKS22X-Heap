@@ -47,7 +47,24 @@ public class MyHeap{
   - precondition: index is between 0 and data.length-1 inclusive.
   */
   private static void pushUp(int[] data,int index){
-
+    boolean sorted = false;
+    while (!sorted){
+      int parent = (index - 1) / 2;
+      if (index == 0 || parent < 0){
+        sorted = true;
+      }
+      else{
+        int temp = data[index];
+        if (temp > data[parent]){
+          data[index] = data[parent];
+          data[parent] = temp;
+          index = parent;
+        }
+        else{
+          sorted = true;
+        }
+      }
+    }
   }
 
   /*
@@ -68,6 +85,10 @@ public class MyHeap{
     int[] data = new int[]{4, 5, 62, 7, 3, 2};
     System.out.println(Arrays.toString(data));
     pushDown(data, data.length, 0);
+    System.out.println(Arrays.toString(data));
+    pushUp(data, 5);
+    System.out.println(Arrays.toString(data));
+    pushUp(data, 3);
     System.out.println(Arrays.toString(data));
   }
 }
