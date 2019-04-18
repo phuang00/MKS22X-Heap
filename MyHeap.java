@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MyHeap{
 
   /*
@@ -7,7 +9,37 @@ public class MyHeap{
   - precondition: size is between 0 and data.length-1 inclusive.
   */
   private static void pushDown(int[] data,int size,int index){
-
+    boolean sorted = false;
+    while (!sorted){
+      int child1 = 2 * index + 1;
+      int child2 = 2 * index + 2;
+      if (child1 >= size && child2 >= size){
+        sorted = true;
+      }
+      else{
+        int max = data[index];
+        if (child1 < size){
+          max = Math.max(max, data[child1]);
+        }
+        if (child2 < size){
+          max = Math.max(max, data[child2]);
+        }
+        int temp = data[index];
+        if (max == data[index]){
+          sorted = true;
+        }
+        else if (child1 < size && max == data[child1]){
+          data[index] = data[child1];
+          data[child1] = temp;
+          index = child1;
+        }
+        else{
+          data[index] = data[child2];
+          data[child2] = temp;
+          index = child2;
+        }
+      }
+    }
   }
 
   /*
@@ -30,5 +62,12 @@ public class MyHeap{
   */
   public static void heapsort(int[] data){
 
+  }
+
+  public static void main(String[] args) {
+    int[] data = new int[]{4, 5, 62, 7, 3, 2};
+    System.out.println(Arrays.toString(data));
+    pushDown(data, data.length, 0);
+    System.out.println(Arrays.toString(data));
   }
 }
