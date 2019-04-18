@@ -71,7 +71,9 @@ public class MyHeap{
   - convert the array into a valid heap. [ should be O(n) ]
   */
   public static void heapify(int[] data){
-
+    for (int i = 0; i < data.length; i++){
+      pushUp(data, i);
+    }
   }
 
   /*
@@ -84,11 +86,19 @@ public class MyHeap{
   public static void main(String[] args) {
     int[] data = new int[]{4, 5, 62, 7, 3, 2};
     System.out.println(Arrays.toString(data));
-    pushDown(data, data.length, 0);
+    /*pushDown(data, data.length, 0);
     System.out.println(Arrays.toString(data));
     pushUp(data, 5);
     System.out.println(Arrays.toString(data));
-    pushUp(data, 3);
+    pushUp(data, 3);*/
+    heapify(data);
+    System.out.println(Arrays.toString(data));
+
+    System.out.println();
+
+    data = new int[]{8, 4, 17, 9, 0, 7, 12};
+    System.out.println(Arrays.toString(data));
+    heapify(data);
     System.out.println(Arrays.toString(data));
   }
 }
