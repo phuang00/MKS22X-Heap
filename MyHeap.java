@@ -71,8 +71,10 @@ public class MyHeap{
   - convert the array into a valid heap. [ should be O(n) ]
   */
   public static void heapify(int[] data){
-    for (int i = 0; i < data.length; i++){
-      pushUp(data, i);
+    int row = (int)(Math.log(data.length)/Math.log(2.0));
+    //System.out.println(row);
+    for (int i = (int)(Math.pow(2, row)) - 1; i >= 0; i--){
+      pushDown(data, data.length, i);
     }
   }
 
