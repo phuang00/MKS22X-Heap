@@ -21,26 +21,21 @@ public class MyHeap{
       }
       else{
         // else
-        int max = data[index];
+        int max = Math.max(data[index], data[child1]);
         // max is meant to find the largest of the parent and its children
-        // it is first set to the value of the current index
-        if (child1 < size){
-          // if the value has a child
-          max = Math.max(max, data[child1]);
-          // max is set to the max of the two values
-        }
+        // it is first set to the max of the parent and first child (since it must have a child)
         if (child2 < size){
-          // if the value has another child
+          // if the parent has another child
           max = Math.max(max, data[child2]);
           // max is set to the max of the original max and the value of the second child
         }
         int temp = data[index];
         if (max == temp){
-          // if the parent (value at current index) is already the greatest
+          // if the parent is already the greatest
           sorted = true;
           // it is in the right place and sorted is set to true so the loop stops
         }
-        else if (child1 < size && max == data[child1]){
+        else if (max == data[child1]){
           // else if child1 is the largest
           data[index] = data[child1];
           data[child1] = temp;
@@ -98,12 +93,9 @@ public class MyHeap{
   - convert the array into a valid heap. [ should be O(n) ]
   */
   public static void heapify(int[] data){
-    int row = (int)(Math.log(data.length)/Math.log(2.0));
-    //row is set to the number of full rows in the heap (floor of log base 2 of data.length)
-    //System.out.println(row);
-    for (int i = (int)(Math.pow(2, row)) - 2; i >= 0; i--){
-      // for every index starting from 2 raised to the row - 2
-      // (the index of the last element of the last full row of the heap) up until 0
+
+    for (int i = (data.length - 2)/2; i >= 0; i--){
+      // for every index starting from the last one that has a child
       pushDown(data, data.length, i);
       // push the element down to the correct place
     }
@@ -115,18 +107,14 @@ public class MyHeap{
   public static void heapsort(int[] data){
     heapify(data);
     // turn the array into a heap
-    int index = data.length - 1;
-    // index is set to the index of the last element
-    while (index > 0){
-      // while the array is not sorted
+    for (int i = data.length - 1; i > 0; i--){
+      // for every index from the last index to 1 (excluding 0 since an array with one value is a heap by default)
       int temp = data[0];
-      data[0] = data[index];
-      data[index] = temp;
+      data[0] = data[i];
+      data[i] = temp;
       // swap the max element (at index 0) with the element at index (the index of the last element that is not yet sorted)
-      pushDown(data, index, 0);
+      pushDown(data, i, 0);
       // push down the element that was swapped to index 0
-      index--;
-      // lower index by one (since one element was sorted)
     }
   }
 
@@ -138,7 +126,7 @@ public class MyHeap{
         long qtime=0;
         long btime=0;
         //average of 5 sorts.
-        for(int trial = 0 ; trial <=5; trial++){
+        for(int trial = 0 ; trial <=20; trial++){
           int []data1 = new int[size];
           int []data2 = new int[size];
           for(int i = 0; i < data1.length; i++){
